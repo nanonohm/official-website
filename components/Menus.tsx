@@ -13,32 +13,38 @@ import {
 import { ChevronDownIcon } from '@chakra-ui/icons';
 
 const linksToProduction = [
-    { title: 'Papers', href: '/https://github.com/verisense-network/papers' },
-    { title: 'Github', href: '/https://github.com/verisense-network' },
-    { title: 'Docs', href: '/https://docs.verisense.network' },
+    { title: 'Papers', href: 'https://github.com/verisense-network/papers' },
+    { title: 'Github', href: 'https://github.com/verisense-network' },
+    { title: 'Docs', href: 'https://docs.verisense.network' },
     { title: 'About', href: '/' }
 ];
-// 上面加两链接：
-// Github -> https://github.com/verisense-network
-// Docs -> https://docs.verisense.network
-// 改一个链接：
-// Whitepaper(改成Papers) -> https://github.com/verisense-network/papers
 const linksToTest = [
-    { title: 'Papers', href: '/https://github.com/verisense-network/papers' },
-    { title: 'Github', href: '/https://github.com/verisense-network' },
-    { title: 'Docs', href: '/https://docs.verisense.network' },
+    { title: 'Papers', href: 'https://github.com/verisense-network/papers' },
+    { title: 'Github', href: 'https://github.com/verisense-network' },
+    { title: 'Docs', href: 'https://docs.verisense.network' },
     { title: 'About', href: '/' }
 ];
 
 const HeaderMenus = () => {
     const pathname = usePathname();
     const links = process.env.NODE_ENV !== 'production' ? linksToTest : linksToProduction;
+    // const toast = useToast();
+    // const addToast = useCallback(() => {
+    //   toast({
+    //     title: "Coming Soon",
+    //     position: "top",
+    //     isClosable: true,
+    //     duration: 3000,
+    //     status: "success",
+    //   });
+    // }, [toast]);
     const router = useRouter();
-    const handleClick = useCallback(() => {
-        router.push(
-            'https://github.com/verisense-network/whitepaper/blob/main/verisense_whitepaper_20240818.pdf'
-        );
-    }, [router]);
+    //   const handleClick = useCallback(() => {
+    //     router.push("https://github.com/verisense-network/whitepaper/blob/main/verisense_whitepaper_20240818.pdf");
+    //   }, [router]);
+    const handleClick = (link: string) => {
+        window.open(link);
+    };
 
     return (
         <>
@@ -56,7 +62,9 @@ const HeaderMenus = () => {
                                 className={clsx({ 'text-theme-color': link.href === pathname })}
                                 key={link.href}
                                 // onClick={link.href === "/" ? undefined : addToast}
-                                onClick={link.href === '/' ? undefined : handleClick}
+                                onClick={() => {
+                                    link.href === '/' ? undefined : handleClick(link.href);
+                                }}
                             >
                                 {link.title}
                             </MenuItem>
@@ -77,7 +85,9 @@ const HeaderMenus = () => {
                             key={link.title}
                             rel='noreferrer'
                             // onClick={link.href === "/" ? undefined : addToast}
-                            onClick={link.href === '/' ? undefined : handleClick}
+                            onClick={() => {
+                                link.href === '/' ? undefined : handleClick(link.href);
+                            }}
                         >
                             <span>{link.title}</span>
                         </div>
